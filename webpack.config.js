@@ -5,6 +5,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var Clean = require('clean-webpack-plugin');
 var merge = require('webpack-merge');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var pkg = require('./package.json');
 
@@ -28,10 +29,6 @@ var mergeDemo = merge.bind(null, {
   },
   module: {
     loaders: [
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-      },
       {
         test: /\.md$/,
         loaders: ['html', 'highlight', 'markdown'],
@@ -128,9 +125,14 @@ if (TARGET === 'gh-pages' || TARGET === 'deploy-gh-pages') {
       new HtmlWebpackPlugin({
         title: pkg.name + ' - ' + pkg.description
       }),
+      new ExtractTextPlugin('style.[chunkhash].css')
     ],
     module: {
       loaders: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract('style', 'css')
+        },
         {
           test: /\.jsx?$/,
           loaders: ['babel'],
