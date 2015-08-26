@@ -131,7 +131,7 @@ if (TARGET === 'gh-pages' || TARGET === 'deploy-gh-pages') {
       loaders: [
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract('style', 'css')
+          loader: ExtractTextPlugin.extract('style', 'css', 'less')
         },
         {
           test: /\.jsx?$/,
